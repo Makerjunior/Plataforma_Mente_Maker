@@ -431,13 +431,11 @@ h2 {
 
 }
 
-
-
-
 /* Remova as bolinhas da lista não ordenada */
 #category-filter {
     list-style-type: none;
     margin-left: 5px;
+    margin-right: 5px;
     padding: 0;
 }
 
@@ -448,12 +446,28 @@ h2 {
     /* Espaçamento entre os links */
 }
 
+/* Remova as bolinhas da lista não ordenada */
+#category-filter {
+    list-style-type: none;
+    margin-left: 5px;
+    padding: 0;
+    /* Defina uma largura fixa para a barra horizontal do menu */
+    width: 100%;
+    display: flex;
+    /* Use flexbox para alinhar os itens horizontalmente */
+}
+
+/* Estilize os links para ficarem lado a lado */
+#category-filter li {
+    display: inline;
+    /* Remova o margin-right para que os botões se ajustem à largura da barra horizontal */
+}
 
 /* Estilo base para os links parecerem botões */
 #category-filter li a {
     display: inline-block;
     padding: 10px 20px;
-    width: 50px;
+    /* Remova a largura fixa para que os botões tenham o mesmo tamanho */
     text-align: center;
     /* Espaçamento interno para o botão */
     text-decoration: none;
@@ -465,8 +479,7 @@ h2 {
     /* Borda do botão */
     border-radius: 5px;
     /* Cantos arredondados */
-    margin-right: 10px;
-    /* Espaçamento entre os botões */
+    /* Remova o margin-right para que os botões se ajustem à largura da barra horizontal */
 }
 
 /* Estilo quando o mouse está sobre o link */
@@ -483,4 +496,85 @@ h2 {
     /* Cor de fundo alterada quando pressionado */
     border-color: #003380;
     /* Borda alterada quando pressionado */
+}
+
+/* Media query para tornar o menu responsivo em telas menores (como a do J7 Prime) */
+@media (max-width: 500px) {
+    #category-filter {
+        margin-left: 2px;
+        margin-right: 2px;
+        /* Adicione margem de 2px nas laterais em telas pequenas */
+        flex-wrap: wrap;
+        /* Permite que os botões quebrem para a próxima linha */
+    }
+
+    #category-filter li {
+        flex: 1;
+        /* Os botões se expandirão igualmente na largura da barra horizontal */
+        margin-right: 10px;
+        /* Adicione margem entre os botões */
+        margin-bottom: 10px;
+        /* Adicione margem na parte inferior dos botões */
+    }
+
+    #category-filter li a {
+        width: 100%;
+        /* Os botões ocuparão toda a largura da barra horizontal */
+        margin-right: 0;
+        /* Remova a margem entre os botões */
+    }
+}
+
+/* Media query para tornar o menu responsivo em telas menores (como a do J7 Prime) */
+@media (max-width: 360px) {
+    #category-filter {
+        margin-left: 2px;
+        margin-right: 2px;
+        /* Adicione margem de 2px nas laterais em telas pequenas */
+        flex-wrap: wrap;
+        /* Permite que os botões quebrem para a próxima linha */
+    }
+
+    #category-filter li {
+        flex: 1;
+        /* Os botões se expandirão igualmente na largura da barra horizontal */
+        margin-right: 10px;
+        /* Adicione margem entre os botões */
+        margin-bottom: 10px;
+        /* Adicione margem na parte inferior dos botões */
+    }
+
+    #category-filter li a {
+        width: 100%;
+        /* Os botões ocuparão toda a largura da barra horizontal */
+        margin-right: 0;
+        /* Remova a margem entre os botões */
+    }
+}
+
+/* Media query para tornar o menu responsivo em telas menores (como a do J7 Prime) */
+@media (max-width: 760px) {
+    #category-filter {
+        margin-left: 2px;
+        margin-right: 2px;
+        /* Adicione margem de 2px nas laterais em telas pequenas */
+        flex-wrap: wrap;
+        /* Permite que os botões quebrem para a próxima linha */
+    }
+
+    #category-filter li {
+        flex: 1;
+        /* Os botões se expandirão igualmente na largura da barra horizontal */
+        margin-right: 10px;
+        /* Adicione margem entre os botões */
+        margin-bottom: 10px;
+        /* Adicione margem na parte inferior dos botões */
+    }
+
+    #category-filter li a {
+        width: 100%;
+        /* Os botões ocuparão toda a largura da barra horizontal */
+        margin-right: 0;
+        /* Remova a margem entre os botões */
+    }
 }
