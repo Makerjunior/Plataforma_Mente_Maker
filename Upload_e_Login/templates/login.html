@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div id="login-container">
+        <h2>Login</h2>
+        <form id="login-form" method="POST" action="/login">
+            <input class="login-input" type="text" name="username" placeholder="Nome de Usuário" required>
+            <input class="login-input" type="password" name="password" placeholder="Senha" required>
+            <button id="login-button" type="submit">Entrar</button>
+            <p id="login-register-link"><a href="/cadastro">Não tem uma conta? Cadastre-se</a>.</p>
+            <p id="login-password-link"><a href="/recuperar_senha">Esqueceu sua senha? Recupere-a aqui</a>.</p>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

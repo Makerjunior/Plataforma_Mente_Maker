@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquivos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <!-- Menu Superior -->
+    <div class="menu-container">
+
+
+        <div class="filter-container">
+            <!-- Adicione o filtro de categoria aqui -->
+            <label>Filtrar por categoria:</label>
+            <ul id="category-filter">
+                <li><a href="#videos">Vídeos</a></li>
+                <li><a href="#imagens">Imagens</a></li>
+                <li><a href="#softwares">Software</a></li>
+                <li><a href="#documentos">Livros</a></li>
+                <li><a href="#iso">Iso</a></li>
+                <li><a href="#zip">ZIP</a></li>
+                <li><a href="#outros">Outros</a></li>
+
+                
+                <!-- Adicione mais opções para outras categorias -->
+            </ul>
+        </div>
+
+        <div class="upload-container">
+            <form method="post" enctype="multipart/form-data" action="/upload_file" id="upload-form">
+                <input type="file" name="file">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="content">
+        <h1>Bem vindo a plataforma Mente Maker!</h1>
+        <h3>Rádio JR</h3>
+        <div class="container">
+            <!-- Exibe o nome da música atual sem extensão -->
+            <div id="current-music"></div>
+
+            <audio controls id="audio-player">
+                <source src="" type="audio/mpeg">
+            </audio>
+
+            <!-- Controle de volume -->
+            <div class="mp3-controls">
+                <button onclick="prevMusic()">Anterior</button>
+                <button onclick="playMusic()">Play</button>
+                <button onclick="pauseMusic()">Pausar</button>
+                <button onclick="nextMusic()">Próxima</button>
+            </div>
+
+            <div class="mp3-controls">
+                <label for="volume-control">Volume:</label>
+                <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1"
+                    onchange="setVolume(this.value)">
+            </div>
+        </div>
+
+        <script>
+            const audioPlayer = document.getElementById("audio-player");
+            const currentMusicElement = document.getElementById("current-music");
+            const volumeControl = document.getElementById("volume-control");
+            const musicList = [
+                {% for music in playlist %}
+            "{{ music.split('.')[0] }}", // Remove a extensão da música
+                {% endfor %}
+            ];
+            let currentMusicIndex = 0;
+
+            function playMusic() {
+                audioPlayer.play();
+            }
+
+            function pauseMusic() {
+                audioPlayer.pause();
+            }
+
+            function nextMusic() {
+                currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+                playSelectedMusic();
+            }
+
+            function prevMusic() {
+                currentMusicIndex = (currentMusicIndex - 1 + musicList.length) % musicList.length;
+                playSelectedMusic();
+            }
+
+            function playSelectedMusic() {
+                const selectedMusic = musicList[currentMusicIndex];
+                audioPlayer.src = `/static/musicas/${selectedMusic}.mp3`; // Adicione a extensão da música de volta
+                audioPlayer.load();
+                audioPlayer.play();
+
+                // Atualiza o elemento que exibe o nome da música
+                currentMusicElement.style.color = "#fff";
+                currentMusicElement.textContent = selectedMusic;
+            }
+
+            function setVolume(volume) {
+                audioPlayer.volume = volume;
+            }
+
+            playSelectedMusic(); // Reproduz a primeira música ao carregar a página
+        </script>
+
+
+        {% for category, files in file_list.items() %}
+        {% if files %}
+        <div class="file-category {{ category }}"> <!-- Adicione a classe da categoria -->
+
+            <h2>{{ category }}</h2>
+            <div class="file-container">
+
+                {% for file in files %}
+                <div class="file-box {{ category }}">
+
+                    <div class="thumbnail-container">
+                        <!-- Conteúdo centralizado verticalmente e horizontalmente -->
+                        <div class="centered-content">
+
+                            {% if category == 'Imagens' %}
+                            <div id="imagens">
+                            <a href="{{ file.url }}" target="_blank">
+                                <img src="{{ file.url }}" alt="{{ file.filename }}">
+                            </a>
+                           </div>
+                            {% elif category == 'Vídeos' %}
+                            <div id="videos">
+                            <div class="video-container" width="300" height="300">
+                                <video controls class="file-player">
+                                    <source src="{{ file.url }}" type="video/mp4">
+                                    Seu navegador não suporta o elemento de vídeo.
+                                </video>
+                                <a href="{{ file.url }}" target="_blank" class="watch-link">Assista em outra aba</a>
+                            </div>
+                            <p id="namevideo">{{ file.filename }}</p>
+                            </div>
+
+                            {% elif category == 'Áudio' %}
+                            <audio controls class="file-player">
+                                <source src="{{ file.url }}" type="audio/mp3">
+                                Seu navegador não suporta o elemento de áudio.
+                            </audio>
+
+                            {% elif category == 'Documentos' %}
+                            <div id="documentos">
+                                <img src="static/pdf.png" alt="Visualização do ISO"
+                                    style="max-width: 100%; height: auto;" />
+                                <p><a href="{{ file.url }}" target="_blank">{{
+                                        file.filename.split('-')[-1].replace('(Undead) (v1.5)', '').split('.')[0] }}</a>
+                                </p>
+                            </div>
+
+                            {% elif category == 'ZIP' %}
+                            <div id="zip">
+                            <a href="{{ file.url }}" style="display: inline-block; text-align: center;">
+                                <img src="static/zip.png" alt="Visualização do PDF"
+                                    style="max-width: 100%; height: auto;" />
+                            </a>
+                            <p><a href="{{ file.url }}" target="_blank">{{ file.filename }}</a></p>
+                            </div>
+
+                            <!-- Outro código para o caso em que 'category' não é 'ZIP' -->
+                            {% elif category == 'ISO' %}
+                            <div id="iso">
+                            <a href="{{ file.url }}" style="display: inline-block; text-align: center;">
+                                <img src="static/iso.png" alt="Visualização do ISO"
+                                    style="max-width: 100%; height: auto;" />
+                            </a>
+                            <p><a href="{{ file.url }}" target="_blank">{{ file.filename }}</a></p>
+                            </div>
+
+                            {% elif category == 'Executável' %}
+                            <div id="softwares">
+                            <a href="{{ file.url }}" style="display: inline-block; text-align: center;">
+                                <img src="static/executavel.png" alt="Ícone de Executável"
+                                    style="max-width: 100%; height: auto;" />
+                            </a>
+                            <p><a href="{{ file.url }}" target="_blank">{{ file.filename }}</a></p>
+                           </div>
+
+                            {% else %}
+                            <enable id="outros">                               
+                                <a href="{{ file.url }}">
+                                    <div style="text-align: center;">
+                                        <img src="static/indefinido.png" alt="Ícone de Executável"
+                                            style="max-width: 100%; height: auto;" />
+                                        <p><a href="{{ file.url }}" target="_blank">{{ file.filename.split('-')[-1]
+                                                }}</a> </p>
+
+                                    </div>
+                                </a>
+
+                            </enable>
+
+                                {% endif %}
+                            
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+
+</html>
