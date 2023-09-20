@@ -135,12 +135,15 @@
                            <h1 id="videos"> {% elif category == 'Vídeos' %}</h1>
                             <div>
                             <div class="video-container" width="300" height="300">
+                                
                                 <video controls class="file-player">
                                     <source src="{{ file.url }}" type="video/mp4" height="250">
                                     Seu navegador não suporta o elemento de vídeo.
                                 </video>
                                 <a href="{{ file.url }}" target="_blank" class="watch-link">Assista em outra aba</a>
                                 <p id="namevideo">{{ file.filename }}</p>
+                                <h3></h3>
+                                
                             </div>
                             </div>
                             
