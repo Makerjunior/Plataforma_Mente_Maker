@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquivos</title>
+    <title>Mente Maker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
@@ -15,15 +15,16 @@
 
         <div class="filter-container">
             <!-- Adicione o filtro de categoria aqui -->
-            <label>Filtrar por categoria:</label>
+            
             <ul id="category-filter">
-                <li><a href="#videos">Vídeos</a></li>
+                <li><a href="#videos">Filmes</a></li>
+                <li><a href="#musicas">Músicas</a></li>
                 <li><a href="#imagens">Imagens</a></li>
                 <li><a href="#softwares">Software</a></li>
                 <li><a href="#documentos">Livros</a></li>
                 <li><a href="#iso">Iso</a></li>
                 <li><a href="#zip">ZIP</a></li>
-                <li><a href="#outros">Outros</a></li>
+                
 
                 
                 <!-- Adicione mais opções para outras categorias -->
@@ -36,8 +37,10 @@
 
     <!-- Conteúdo Principal -->
     <div class="content">
+    <div id="musicas">
         <h1>Bem vindo a plataforma Mente Maker!</h1>
         <h3>Rádio JR</h3>
+         
         <div class="container">
             <!-- Exibe o nome da música atual sem extensão -->
             <div id="current-music"></div>
@@ -60,7 +63,7 @@
                     onchange="setVolume(this.value)">
             </div>
         </div>
-
+        </div>
         <script>
             const audioPlayer = document.getElementById("audio-player");
             const currentMusicElement = document.getElementById("current-music");
@@ -129,17 +132,18 @@
                                 <img src="{{ file.url }}" alt="{{ file.filename }}">
                             </a>
                            </div>
-                            {% elif category == 'Vídeos' %}
-                            <div id="videos">
+                           <h1 id="videos"> {% elif category == 'Vídeos' %}</h1>
+                            <div>
                             <div class="video-container" width="300" height="300">
                                 <video controls class="file-player">
-                                    <source src="{{ file.url }}" type="video/mp4">
+                                    <source src="{{ file.url }}" type="video/mp4" height="250">
                                     Seu navegador não suporta o elemento de vídeo.
                                 </video>
                                 <a href="{{ file.url }}" target="_blank" class="watch-link">Assista em outra aba</a>
+                                <p id="namevideo">{{ file.filename }}</p>
                             </div>
-                            <p id="namevideo">{{ file.filename }}</p>
                             </div>
+                            
 
                             {% elif category == 'Áudio' %}
                             <audio controls class="file-player">
@@ -160,10 +164,10 @@
                             <div id="zip">
                             <a href="{{ file.url }}" style="display: inline-block; text-align: center;">
                                 <img src="static/zip.png" alt="Visualização do PDF"
-                                    style="max-width: 100%; height: auto;" />
+                                    style="max-width: 50%; height: auto;" />
                             </a>
-                            <p><a href="{{ file.url }}" target="_blank">{{ file.filename }}</a></p>
-                            </div>
+                            
+                            </div><p><a href="{{ file.url }}" target="_blank">{{ file.filename }}</a></p>
 
                             <!-- Outro código para o caso em que 'category' não é 'ZIP' -->
                             {% elif category == 'ISO' %}
