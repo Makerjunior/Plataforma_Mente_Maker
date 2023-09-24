@@ -15,7 +15,7 @@ def get_file_list():
             file_type = 'Imagens'
         elif ext.lower() in ['.mp3', '.wav', '.wma']:
             file_type = 'Áudio'
-        elif ext.lower() in ['.mp4', '.avi', '.mpg', '.mpeg', '.mov', '.wmv']:
+        elif ext.lower() in ['.mp4', '.avi', '.mpg', '.mpeg', '.mov', '.wmv','.mkv']:
             file_type = 'Vídeos'
         elif ext.lower() == '.exe':
             file_type = 'Executável'
